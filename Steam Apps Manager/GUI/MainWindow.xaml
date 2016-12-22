@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Steam_Apps_Manager"
         mc:Ignorable="d"
-        Title="Steam Apps Manager" Height="350" Width="525">
+        Title="Steam Apps Manager" Height="350" Width="525" ResizeMode="NoResize" Initialized="Window_Initialized">
     <Grid>
         
     </Grid>
