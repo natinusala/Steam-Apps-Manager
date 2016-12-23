@@ -30,13 +30,13 @@ namespace Steam_Apps_Manager
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            /*if (SteamUtils.SteamUtils.IsSteamRunning())
+            if (SteamUtils.SteamUtils.IsSteamRunning())
             {
                 MessageBox.Show("Steam Apps Manager cannot be used while Steam is running ; please close Steam and try again.", "Steam is running", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
                 Application.Current.Shutdown();
                 return;
-            }*/
+            }
 
             RefreshApps();
         }
