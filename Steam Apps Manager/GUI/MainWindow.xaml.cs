@@ -36,8 +36,11 @@ namespace Steam_Apps_Manager
                 return;
             }
 
-            ACFNode root = ACFNode.ParseACF("C:\\Program Files (x86)\\Steam\\steamapps\\appmanifest_8930.acf");
-            Console.WriteLine(root.GetValue("AppState", "appid"));
+            AppsDirectory directory = new AppsDirectory("D:\\Program Files (x86)\\Steam\\steamapps");
+            foreach (SteamApp app in directory.apps)
+            {
+                Console.WriteLine(app.appName);
+            }
         }
     }
 }

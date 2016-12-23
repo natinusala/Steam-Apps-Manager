@@ -17,7 +17,7 @@ namespace Steam_Apps_Manager.SteamUtils
         private string manifestPath;
 
         private int appId;
-        private string appName;
+        public string appName { get; private set; }
         private string installDir;
         private long bytesToDownload;
 
