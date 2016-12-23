@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Steam_Apps_Manager"
         mc:Ignorable="d"
-        Title="Steam Apps Manager" Height="350" Width="525" ResizeMode="NoResize" Initialized="Window_Initialized">
+        Title="Steam Apps Manager" Height="391" Width="638" ResizeMode="NoResize" Initialized="Window_Initialized">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="65*"/>
+            <ColumnDefinition Width="251*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="listBox" Height="150" Margin="16,10,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalContentAlignment="Center"/>
+        <GroupBox x:Name="groupBox" Header="App informations" Margin="15,165,10,0" VerticalAlignment="Top" Height="155" Grid.ColumnSpan="2" HorizontalContentAlignment="Center">
+            <StackPanel Height="135" Width="587" Margin="10,10,-2,-12">
+                <Label x:Name="label" Content="Please select an app in the list to move it." HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,45,0,0"/>
+            </StackPanel>
+        </GroupBox>
+        <Label x:Name="label1" Content="Steam Apps Manager by natinusala" HorizontalAlignment="Left" Margin="262,320,0,0" VerticalAlignment="Top" Width="230" Grid.Column="1" HorizontalContentAlignment="Right"/>
+
     </Grid>
 </Window>

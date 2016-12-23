@@ -21,9 +21,12 @@ namespace Steam_Apps_Manager.SteamUtils
         private string installDir;
         private long bytesToDownload;
 
-        public SteamApp(string manifestPath)
+        public AppsDirectory directory { get; private set; }
+
+        public SteamApp(string manifestPath, AppsDirectory directory)
         {
             this.manifestPath = manifestPath;
+            this.directory = directory;
 
             ACFNode appState = (ACFNode) ACFNode.ParseACF(manifestPath)["AppState"];
 

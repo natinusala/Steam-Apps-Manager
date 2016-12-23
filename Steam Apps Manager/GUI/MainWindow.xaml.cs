@@ -23,23 +23,62 @@ namespace Steam_Apps_Manager
     {
         public MainWindow()
         {
+            this.steamApps = new List<SteamApp>();
+
             InitializeComponent();
         }
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            if (SteamUtils.SteamUtils.IsSteamRunning())
+            /*if (SteamUtils.SteamUtils.IsSteamRunning())
             {
                 MessageBox.Show("Steam Apps Manager cannot be used while Steam is running ; please close Steam and try again.", "Steam is running", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
                 Application.Current.Shutdown();
                 return;
+            }*/
+
+            RefreshApps();
+        }
+
+        private List<SteamApp> steamApps;
+
+        private void RefreshApps()
+        {
+            /*this.DataContext = steamApps;
+            steamApps.Clear();
+
+            List<AppsDirectory> directories = AppsDirectory.GetAllAppsDirectories();
+            foreach (AppsDirectory directory in directories)
+            {
+                foreach (SteamApp app in directory.apps)
+                {
+                    steamApps.Add(app);
+                }
             }
 
-            AppsDirectory directory = new AppsDirectory("D:\\Program Files (x86)\\Steam\\steamapps");
-            foreach (SteamApp app in directory.apps)
+            appsDataGrid.Items.Refresh();*/
+        }
+
+        private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TabControl tabControl = (TabControl)sender;
+            switch (tabControl.SelectedIndex)
             {
-                Console.WriteLine(app.appName);
+                case 0:
+                {
+                    //Refresh the apps list
+                    RefreshApps();
+                    break;
+                }
+                case 1:
+                {
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
             }
         }
     }
