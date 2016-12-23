@@ -45,7 +45,7 @@ namespace Steam_Apps_Manager
 
         private void RefreshApps()
         {
-            /*this.DataContext = steamApps;
+            listBox.Items.Clear();
             steamApps.Clear();
 
             List<AppsDirectory> directories = AppsDirectory.GetAllAppsDirectories();
@@ -54,32 +54,38 @@ namespace Steam_Apps_Manager
                 foreach (SteamApp app in directory.apps)
                 {
                     steamApps.Add(app);
+                    listBox.Items.Add(app.appName);
                 }
             }
-
-            appsDataGrid.Items.Refresh();*/
         }
 
-        private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            TabControl tabControl = (TabControl)sender;
-            switch (tabControl.SelectedIndex)
+            SteamApp selectedApp = steamApps[listBox.SelectedIndex];
+
+            this.appNameLabel.Content = selectedApp.appName;
+            this.appPathLabel.Content = "Installed in " + selectedApp.directory.path;
+
+            SteamAppStatus status = selectedApp.GetStatus();
+
+            switch (status)
             {
-                case 0:
+                case SteamAppStatus.READY_TO_MOVE:
                 {
-                    //Refresh the apps list
-                    RefreshApps();
+                    this.appStatusLabel.Visibility = Visibility.Collapsed;
+                    this.appMoveButton.Visibility = Visibility.Visible;
                     break;
                 }
-                case 1:
+                case SteamAppStatus.UPDATE_NEEDED:
                 {
-                    break;
-                }
-                default:
-                {
-                    break;
+                        this.appMoveButton.Visibility = Visibility.Collapsed;
+                        this.appStatusLabel.Visibility = Visibility.Visible;
+                        break;
                 }
             }
+
+            this.welcomeLabelGrid.Visibility = Visibility.Collapsed;
+            this.infosGrid.Visibility = Visibility.Visible;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Steam_Apps_Manager.SteamUtils
         private int appId;
         public string appName { get; private set; }
         private string installDir;
-        private long bytesToDownload;
+        private string appState;
 
         public AppsDirectory directory { get; private set; }
 
@@ -33,12 +33,12 @@ namespace Steam_Apps_Manager.SteamUtils
             this.appId = int.Parse(((string)appState["appid"]));
             this.appName = (string)appState["name"];
             this.installDir = (string)appState["installdir"];
-            this.bytesToDownload = long.Parse((string)appState["BytesToDownload"]);
+            this.appState = (string)appState["StateFlags"];
         }
 
         public SteamAppStatus GetStatus()
         {
-            return this.bytesToDownload == 0 ? SteamAppStatus.READY_TO_MOVE : SteamAppStatus.UPDATE_NEEDED;
+            return this.appState == "4" ? SteamAppStatus.READY_TO_MOVE : SteamAppStatus.UPDATE_NEEDED;
         }
     }
 }
