@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Steam_Apps_Manager.SteamUtils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,8 +31,13 @@ namespace Steam_Apps_Manager
             if (SteamUtils.SteamUtils.IsSteamRunning())
             {
                 MessageBox.Show("Steam Apps Manager cannot be used while Steam is running ; please close Steam and try again.", "Steam is running", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Close();
                 Application.Current.Shutdown();
+                return;
             }
+
+            ACFNode root = ACFNode.ParseACF("C:\\Program Files (x86)\\Steam\\steamapps\\appmanifest_8930.acf");
+            Console.WriteLine(root.GetValue("AppState", "appid"));
         }
     }
 }

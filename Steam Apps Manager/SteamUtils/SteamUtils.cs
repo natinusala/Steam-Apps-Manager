@@ -17,23 +17,23 @@ namespace Steam_Apps_Manager.SteamUtils
 
         public static string GetSteamInstallDirectory()
         {
-            RegistryKey Key = null;
+            RegistryKey key = null;
 
-            foreach(string CurrentKey in STEAM_REG_KEYS)
+            foreach(string currentKey in STEAM_REG_KEYS)
             {
-                Key = Registry.LocalMachine.OpenSubKey(CurrentKey);
+                key = Registry.LocalMachine.OpenSubKey(currentKey);
 
-                if (Key != null)
+                if (key != null)
                     break;
             }
 
-            if (Key == null)
+            if (key == null)
             {
                 return null;
             }
             else
             {
-                return (string) Key.GetValue("InstallPath");
+                return (string) key.GetValue("InstallPath");
             }
         }
 
