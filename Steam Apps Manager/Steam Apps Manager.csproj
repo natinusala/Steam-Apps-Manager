@@ -57,8 +57,8 @@
     </ApplicationDefinition>
     <Compile Include="SteamUtils\ACFNode.cs" />
     <Compile Include="SteamUtils\LibraryFolder.cs" />
-    <Compile Include="SteamUtils\SteamApp.cs" />
-    <Compile Include="SteamUtils\SteamUtils.cs" />
+    <Compile Include="SteamUtils\App.cs" />
+    <Compile Include="SteamUtils\Utils.cs" />
     <Page Include="GUI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Steam_Apps_Manager.SteamUtils
 {
-    class SteamUtils
+    class Utils
     {
         private static readonly string[] STEAM_REG_KEYS = {
             "SOFTWARE\\WOW6432Node\\Valve\\Steam",

@@ -12,28 +12,38 @@ namespace Steam_Apps_Manager.SteamUtils
         UPDATE_NEEDED
     }
 
-    class SteamApp
+    class App
     {
         private string manifestPath;
 
-        private int appId;
+        private uint appId;
         public string appName { get; private set; }
         private string installDir;
         private string appState;
+        public ulong sizeOnDisk { get; private set; }
 
         public LibraryFolder directory { get; private set; }
 
-        public SteamApp(string manifestPath, LibraryFolder directory)
+        public App(string manifestPath, LibraryFolder directory)
         {
             this.manifestPath = manifestPath;
             this.directory = directory;
 
             ACFNode appState = (ACFNode) ACFNode.ParseACF(manifestPath)["AppState"];
 
-            this.appId = int.Parse(((string)appState["appid"]));
+            this.appId = uint.Parse(((string)appState["appid"]));
             this.appName = (string)appState["name"];
             this.installDir = (string)appState["installdir"];
             this.appState = (string)appState["StateFlags"];
+
+            if (appState.ContainsKey("SizeOnDisk"))
+            {
+                sizeOnDisk = ulong.Parse(((string)appState["SizeOnDisk"]));
+            }
+            else
+            {
+                this.sizeOnDisk = 0;
+            }
         }
 
         public SteamAppStatus GetStatus()

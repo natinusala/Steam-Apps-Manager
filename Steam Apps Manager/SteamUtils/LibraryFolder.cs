@@ -9,7 +9,7 @@ namespace Steam_Apps_Manager.SteamUtils
 {
     class LibraryFolder
     {
-        public List<SteamApp> apps { get; private set; }
+        public List<App> apps { get; private set; }
 
         public string path { get; private set; }
 
@@ -18,7 +18,7 @@ namespace Steam_Apps_Manager.SteamUtils
             List<string> list = new List<string>();
 
             //Add the default install directory
-            string baseSteamApps = SteamUtils.GetSteamInstallDirectory() + "\\steamapps";
+            string baseSteamApps = Utils.GetSteamInstallDirectory() + "\\steamapps";
             string libraryFoldersVdf = baseSteamApps + "\\libraryfolders.vdf";
             list.Add(baseSteamApps);
 
@@ -60,7 +60,7 @@ namespace Steam_Apps_Manager.SteamUtils
         public LibraryFolder(string path)
         {
             this.path = path;
-            this.apps = new List<SteamApp>();
+            this.apps = new List<App>();
 
             //Listing of all the files in this directory
             //to detect the manifests
@@ -73,7 +73,7 @@ namespace Steam_Apps_Manager.SteamUtils
                 if (fileName.StartsWith("appmanifest_") && fileName.EndsWith(".acf"))
                 {
                     //Creation of one SteamApp per app manifest
-                    SteamApp steamApp = new SteamApp(file, this);
+                    App steamApp = new App(file, this);
                     apps.Add(steamApp);
                 }
             }
