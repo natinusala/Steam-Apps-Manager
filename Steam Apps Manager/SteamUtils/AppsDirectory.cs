@@ -13,26 +13,26 @@ namespace Steam_Apps_Manager.SteamUtils
 
         public string path { get; private set; }
 
-        public static List<AppsDirectory> GetAllAppsDirectories()
+        public static List<string> GetAllAppsDirectoriesPaths()
         {
-            List<AppsDirectory> list = new List<AppsDirectory>();
+            List<string> list = new List<string>();
 
             //Add the default install directory
             string baseSteamApps = SteamUtils.GetSteamInstallDirectory() + "\\steamapps";
             string libraryFoldersVdf = baseSteamApps + "\\libraryfolders.vdf";
-            list.Add(new AppsDirectory(baseSteamApps));
+            list.Add(baseSteamApps);
 
             //Add all the others
             if (File.Exists(libraryFoldersVdf))
             {
-                ACFNode libraryFolders = (ACFNode) ACFNode.ParseACF(libraryFoldersVdf)["LibraryFolders"];
+                ACFNode libraryFolders = (ACFNode)ACFNode.ParseACF(libraryFoldersVdf)["LibraryFolders"];
                 int i = 1;
                 while (true)
                 {
                     if (libraryFolders.ContainsKey(i.ToString()))
                     {
                         string path = (string)libraryFolders[i.ToString()];
-                        list.Add(new AppsDirectory(path.Replace("\\\\", "\\") + "\\steamapps"));
+                        list.Add(path.Replace("\\\\", "\\") + "\\steamapps");
                         i++;
                     }
                     else
@@ -40,6 +40,18 @@ namespace Steam_Apps_Manager.SteamUtils
                         break;
                     }
                 }
+            }
+
+            return list;
+        }
+
+        public static List<AppsDirectory> GetAllAppsDirectories()
+        {
+            List<AppsDirectory> list = new List<AppsDirectory>();
+
+            foreach (string path in GetAllAppsDirectoriesPaths())
+            {
+                list.Add(new AppsDirectory(path));
             }
 
             return list;
