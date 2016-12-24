@@ -48,8 +48,8 @@ namespace Steam_Apps_Manager
             listBox.Items.Clear();
             steamApps.Clear();
 
-            List<AppsDirectory> directories = AppsDirectory.GetAllAppsDirectories();
-            foreach (AppsDirectory directory in directories)
+            List<LibraryFolder> directories = LibraryFolder.GetAllLibraryFolders();
+            foreach (LibraryFolder directory in directories)
             {
                 foreach (SteamApp app in directory.apps)
                 {

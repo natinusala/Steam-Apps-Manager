@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Steam_Apps_Manager.SteamUtils
 {
-    class AppsDirectory
+    class LibraryFolder
     {
         public List<SteamApp> apps { get; private set; }
 
         public string path { get; private set; }
 
-        public static List<string> GetAllAppsDirectoriesPaths()
+        public static List<string> GetAllLibraryFoldersPaths()
         {
             List<string> list = new List<string>();
 
@@ -45,19 +45,19 @@ namespace Steam_Apps_Manager.SteamUtils
             return list;
         }
 
-        public static List<AppsDirectory> GetAllAppsDirectories()
+        public static List<LibraryFolder> GetAllLibraryFolders()
         {
-            List<AppsDirectory> list = new List<AppsDirectory>();
+            List<LibraryFolder> list = new List<LibraryFolder>();
 
-            foreach (string path in GetAllAppsDirectoriesPaths())
+            foreach (string path in GetAllLibraryFoldersPaths())
             {
-                list.Add(new AppsDirectory(path));
+                list.Add(new LibraryFolder(path));
             }
 
             return list;
         }
 
-        public AppsDirectory(string path)
+        public LibraryFolder(string path)
         {
             this.path = path;
             this.apps = new List<SteamApp>();

@@ -21,9 +21,9 @@ namespace Steam_Apps_Manager.SteamUtils
         private string installDir;
         private string appState;
 
-        public AppsDirectory directory { get; private set; }
+        public LibraryFolder directory { get; private set; }
 
-        public SteamApp(string manifestPath, AppsDirectory directory)
+        public SteamApp(string manifestPath, LibraryFolder directory)
         {
             this.manifestPath = manifestPath;
             this.directory = directory;
