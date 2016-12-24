@@ -1,0 +1,14 @@
+﻿<Window x:Class="Steam_Apps_Manager.GUI.MoveDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Steam_Apps_Manager.GUI"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Title="MoveDialog" Height="200" Width="400">
+    <Grid>
+        <Label x:Name="appNameLabel" Content="Label" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+
+    </Grid>
+</Window>

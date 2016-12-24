@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GUI\MoveDialog.xaml.cs">
+      <DependentUpon>MoveDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SteamUtils\ACFNode.cs" />
     <Compile Include="SteamUtils\LibraryFolder.cs" />
     <Compile Include="SteamUtils\App.cs" />
@@ -71,6 +74,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="GUI\MoveDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

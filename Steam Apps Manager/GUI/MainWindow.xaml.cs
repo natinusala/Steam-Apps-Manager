@@ -1,19 +1,9 @@
-﻿using Steam_Apps_Manager.SteamUtils;
+﻿using Steam_Apps_Manager.GUI;
+using Steam_Apps_Manager.SteamUtils;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Steam_Apps_Manager
 {
@@ -61,7 +51,7 @@ namespace Steam_Apps_Manager
         }
 
         //from http://stackoverflow.com/questions/281640/how-do-i-get-a-human-readable-file-size-in-bytes-abbreviation-using-net
-        private string ConvertSizeFromBytesToString(ulong size)
+        private string ConvertSizeFromBytesToString(long size)
         {
             string[] sizes = { "B", "KB", "MB", "GB" };
             double len = size;
@@ -105,6 +95,13 @@ namespace Steam_Apps_Manager
 
             this.welcomeLabelGrid.Visibility = Visibility.Collapsed;
             this.infosGrid.Visibility = Visibility.Visible;
+        }
+
+        private void appMoveButton_Click(object sender, RoutedEventArgs e)
+        {
+           MoveDialog dialog = new MoveDialog(steamApps[listBox.SelectedIndex]);
+           dialog.Owner = this;
+           dialog.ShowDialog();
         }
     }
 }

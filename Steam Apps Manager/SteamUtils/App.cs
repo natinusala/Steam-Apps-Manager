@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Steam_Apps_Manager.SteamUtils
 {
-    enum SteamAppStatus
+    public enum SteamAppStatus
     {
         READY_TO_MOVE,
         UPDATE_NEEDED
     }
 
-    class App
+    public class App
     {
         private string manifestPath;
 
@@ -20,7 +20,7 @@ namespace Steam_Apps_Manager.SteamUtils
         public string appName { get; private set; }
         private string installDir;
         private string appState;
-        public ulong sizeOnDisk { get; private set; }
+        public long sizeOnDisk { get; private set; }
 
         public LibraryFolder directory { get; private set; }
 
@@ -38,7 +38,7 @@ namespace Steam_Apps_Manager.SteamUtils
 
             if (appState.ContainsKey("SizeOnDisk"))
             {
-                sizeOnDisk = ulong.Parse(((string)appState["SizeOnDisk"]));
+                sizeOnDisk = long.Parse(((string)appState["SizeOnDisk"]));
             }
             else
             {

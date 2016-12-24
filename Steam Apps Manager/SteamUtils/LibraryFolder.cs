@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 
 namespace Steam_Apps_Manager.SteamUtils
 {
-    class LibraryFolder
+    public class LibraryFolder
     {
         public List<App> apps { get; private set; }
 
         public string path { get; private set; }
+
+        public long GetAvailableFreeDiskSpace()
+        {
+            return new DriveInfo(path.Substring(0, 1)).AvailableFreeSpace;
+        }
 
         public static List<string> GetAllLibraryFoldersPaths()
         {

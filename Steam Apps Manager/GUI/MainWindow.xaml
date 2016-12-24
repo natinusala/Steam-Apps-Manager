@@ -22,7 +22,7 @@
                     <Label x:Name="appPathLabel" Content="Currently installed in C:\Program Files (x86)\Steam\steamapps" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontStyle="Italic"/>
                     <Label x:Name="appSizeLabel" Content="Size on disk : n/a" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontStyle="Italic"/>
                     <Label x:Name="appStatusLabel" Content="This app needs to be updated before moving it. Please open Steam and update it." HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold"/>
-                    <Button x:Name="appMoveButton" Content="Move this app" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button x:Name="appMoveButton" Content="Move this app" HorizontalAlignment="Center" VerticalAlignment="Center" Click="appMoveButton_Click"/>
                 </StackPanel>
             </Grid>
         </GroupBox>
