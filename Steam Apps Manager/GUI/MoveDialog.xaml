@@ -6,9 +6,11 @@
         xmlns:local="clr-namespace:Steam_Apps_Manager.GUI"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        Title="MoveDialog" Height="200" Width="400">
+        Title="MoveDialog" Height="137" Width="400">
     <Grid>
-        <Label x:Name="appNameLabel" Content="Label" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="appNameLabel" Content="Move xxx to :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <ComboBox x:Name="comboBox" Margin="10,41,0,0" VerticalAlignment="Top" Width="365" HorizontalAlignment="Left"/>
+        <Button x:Name="button" Content="Move it now" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Width="365"/>
 
     </Grid>
 </Window>

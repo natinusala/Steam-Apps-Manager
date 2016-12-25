@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Steam_Apps_Manager.SteamUtils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace Steam_Apps_Manager.GUI
     public partial class MoveDialog : Window
     {
         private SteamUtils.App steamApp;
+        private List<LibraryFolder> libraryFolders;
         public MoveDialog(SteamUtils.App steamApp)
         {
             this.steamApp = steamApp;
@@ -28,6 +30,25 @@ namespace Steam_Apps_Manager.GUI
 
             this.Title = "Move " + steamApp.appName;
             this.appNameLabel.Content = "Move " + steamApp.appName + " to :";
+
+            RefreshLibraryPaths();
+        }
+
+        private void RefreshLibraryPaths()
+        {
+            this.comboBox.Items.Clear();
+            libraryFolders = LibraryFolder.GetAllLibraryFolders();
+
+            foreach (LibraryFolder folder in libraryFolders)
+            {
+                if (folder.path != steamApp.directory.path)
+                {
+                    this.comboBox.Items.Add(folder.path);
+                }
+            }
+
+            this.comboBox.Items.Add("Create a new Steam library folder...");
+            this.comboBox.SelectedIndex = 0;
         }
     }
 }

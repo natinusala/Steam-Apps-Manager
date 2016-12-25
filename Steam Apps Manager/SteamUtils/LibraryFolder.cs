@@ -17,15 +17,16 @@ namespace Steam_Apps_Manager.SteamUtils
         {
             return new DriveInfo(path.Substring(0, 1)).AvailableFreeSpace;
         }
+        
 
-        public static List<string> GetAllLibraryFoldersPaths()
+        public static List<LibraryFolder> GetAllLibraryFolders()
         {
-            List<string> list = new List<string>();
+            List<LibraryFolder> list = new List<LibraryFolder>();
 
             //Add the default install directory
             string baseSteamApps = Utils.GetSteamInstallDirectory() + "\\steamapps";
             string libraryFoldersVdf = baseSteamApps + "\\libraryfolders.vdf";
-            list.Add(baseSteamApps);
+            list.Add(new LibraryFolder(baseSteamApps));
 
             //Add all the others
             if (File.Exists(libraryFoldersVdf))
@@ -37,7 +38,7 @@ namespace Steam_Apps_Manager.SteamUtils
                     if (libraryFolders.ContainsKey(i.ToString()))
                     {
                         string path = (string)libraryFolders[i.ToString()];
-                        list.Add(path.Replace("\\\\", "\\") + "\\steamapps");
+                        list.Add(new LibraryFolder(path.Replace("\\\\", "\\") + "\\steamapps"));
                         i++;
                     }
                     else
@@ -45,18 +46,6 @@ namespace Steam_Apps_Manager.SteamUtils
                         break;
                     }
                 }
-            }
-
-            return list;
-        }
-
-        public static List<LibraryFolder> GetAllLibraryFolders()
-        {
-            List<LibraryFolder> list = new List<LibraryFolder>();
-
-            foreach (string path in GetAllLibraryFoldersPaths())
-            {
-                list.Add(new LibraryFolder(path));
             }
 
             return list;
