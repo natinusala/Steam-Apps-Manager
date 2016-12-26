@@ -2,6 +2,7 @@
 using Steam_Apps_Manager.SteamUtils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -48,8 +49,16 @@ namespace Steam_Apps_Manager
                 foreach (SteamUtils.App app in directory.apps)
                 {
                     steamApps.Add(app);
-                    listBox.Items.Add(app.appName);
                 }
+            }
+
+            //Sort steamApps
+            steamApps = steamApps.OrderBy(o=>o.appName).ToList();
+
+            //Add to the List
+            foreach (SteamUtils.App app in steamApps)
+            {
+                listBox.Items.Add(app.appName);
             }
         }
 
@@ -61,7 +70,7 @@ namespace Steam_Apps_Manager
             int order = 0;
             while (len >= 1024 && ++order < sizes.Length)
             {
-                len = len / 1000;
+                len = len / 1024;
             }
 
             // Adjust the format string to your preferences. For example "{0:0.#}{1}" would

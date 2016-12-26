@@ -22,7 +22,7 @@ namespace Steam_Apps_Manager.SteamUtils
         public string appName { get; private set; }
         private string installDir;
         private string fullInstallDir;
-        private string appState;
+        private int appState;
         public long sizeOnDisk { get; private set; }
 
         public LibraryFolder folder { get; private set; }
@@ -38,7 +38,7 @@ namespace Steam_Apps_Manager.SteamUtils
             this.appName = (string)appState["name"];
             this.installDir = (string)appState["installdir"];
             this.fullInstallDir = this.folder.path + "\\common\\" + installDir;
-            this.appState = (string)appState["StateFlags"];
+            this.appState = int.Parse((string)appState["StateFlags"]);
 
             if (appState.ContainsKey("SizeOnDisk"))
             {
@@ -57,7 +57,7 @@ namespace Steam_Apps_Manager.SteamUtils
 
         public SteamAppStatus GetStatus()
         {
-            return this.appState == "4" ? SteamAppStatus.READY_TO_MOVE : SteamAppStatus.UPDATE_NEEDED;
+            return this.appState == 4 ? SteamAppStatus.READY_TO_MOVE : SteamAppStatus.UPDATE_NEEDED;
         }
 
         public void MoveAppFiles(LibraryFolder newFolder, BackgroundWorker worker)
@@ -76,9 +76,9 @@ namespace Steam_Apps_Manager.SteamUtils
 
                 File.Move(file, file.Replace(fullInstallDir, newFullDir));
 
-                if (worker != null)
+                if (worker != null && fileSize != 0)
                 {
-                    worker.ReportProgress((int)(sizeOnDisk / fileSize));
+                    worker.ReportProgress((int)Math.Round(((double)fileSize / (double)sizeOnDisk) * 1000.0f));
                 }
             }
 

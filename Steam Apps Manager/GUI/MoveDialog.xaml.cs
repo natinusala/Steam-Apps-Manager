@@ -1,19 +1,8 @@
 ﻿using Steam_Apps_Manager.SteamUtils;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Steam_Apps_Manager.GUI
 {
@@ -68,7 +57,7 @@ namespace Steam_Apps_Manager.GUI
 
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MessageBox.Show("The app has been successfully moved !", "Success !", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("The app has been successfully moved !\nRun a game cache files verification from Steam if the game doesn't work properly.", "Success !", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
         }
 
@@ -134,7 +123,7 @@ namespace Steam_Apps_Manager.GUI
                 this.appNameMovingLabel.Content = "Moving " + steamApp.appName + " to " + selectedFolder.path + "\\...";
 
                 this.progressBar.Value = 0;
-                this.progressBar.Maximum = 100;
+                this.progressBar.Maximum = 1000;
 
                 this.folderSelectGrid.Visibility = Visibility.Collapsed;
                 this.movingGrid.Visibility = Visibility.Visible;
