@@ -68,6 +68,9 @@ namespace Steam_Apps_Manager
 
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (listBox.Items.Count == 0)
+                return;
+
             SteamUtils.App selectedApp = steamApps[listBox.SelectedIndex];
 
             this.appNameLabel.Content = selectedApp.appName;
@@ -102,6 +105,7 @@ namespace Steam_Apps_Manager
            MoveDialog dialog = new MoveDialog(steamApps[listBox.SelectedIndex]);
            dialog.Owner = this;
            dialog.ShowDialog();
+           RefreshApps();
         }
     }
 }
