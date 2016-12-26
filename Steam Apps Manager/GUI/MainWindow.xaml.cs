@@ -36,6 +36,9 @@ namespace Steam_Apps_Manager
 
         private void RefreshApps()
         {
+            this.infosGrid.Visibility = Visibility.Collapsed;
+            this.welcomeLabelGrid.Visibility = Visibility.Visible;
+
             listBox.Items.Clear();
             steamApps.Clear();
 
@@ -74,7 +77,7 @@ namespace Steam_Apps_Manager
             SteamUtils.App selectedApp = steamApps[listBox.SelectedIndex];
 
             this.appNameLabel.Content = selectedApp.appName;
-            this.appPathLabel.Content = "Installed in " + selectedApp.directory.path;
+            this.appPathLabel.Content = "Installed in " + selectedApp.folder.path;
             this.appSizeLabel.Content = "Size : " + ConvertSizeFromBytesToString(selectedApp.sizeOnDisk);
 
             SteamAppStatus status = selectedApp.GetStatus();

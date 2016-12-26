@@ -15,7 +15,7 @@
         </Grid>
         <Grid x:Name="movingGrid" Visibility="Collapsed">
             <Label x:Name="appNameMovingLabel" Content="Moving xxx to xxx :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-            <ProgressBar HorizontalAlignment="Left" Height="44" Margin="10,41,0,0" VerticalAlignment="Top" Width="560" IsIndeterminate="True"/>
+            <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" Height="44" Margin="10,41,0,0" VerticalAlignment="Top" Width="560" IsIndeterminate="True"/>
         </Grid>
     </Grid>
 </Window>

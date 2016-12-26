@@ -51,6 +51,11 @@ namespace Steam_Apps_Manager.SteamUtils
             return list;
         }
 
+        public string GetManifestPathForAppId(uint appid)
+        {
+            return this.path + "\\" + "appmanifest_" + appid + ".acf";
+        }
+
         public LibraryFolder(string path)
         {
             this.path = path;
