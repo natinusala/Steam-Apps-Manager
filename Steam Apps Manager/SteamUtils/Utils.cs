@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,17 @@ namespace Steam_Apps_Manager.SteamUtils
         public static string GetLibraryFolderVDFPath()
         {
             return GetBaseSteamAppsPath() + "\\libraryfolders.vdf";
+        }
+
+
+        public static bool IsDirectoryEmpty(string path)
+        {
+            DirectoryInfo directory = new DirectoryInfo(path);
+
+            FileInfo[] files = directory.GetFiles();
+            DirectoryInfo[] subdirs = directory.GetDirectories();
+
+            return (files.Length == 0 && subdirs.Length == 0);
         }
 
         public static string GetSteamInstallDirectory()

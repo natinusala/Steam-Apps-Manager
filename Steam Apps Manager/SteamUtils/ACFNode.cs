@@ -27,7 +27,7 @@ namespace Steam_Apps_Manager.SteamUtils
                 {
                     str += tabulations + "\n{\n";
                     str = tabulations + ((ACFNode)entry.Value).InternalToString(str, level + 1);
-                    str += tabulations + "\n}\n";
+                    str += tabulations + "}\n";
                 }
                 else
                 {

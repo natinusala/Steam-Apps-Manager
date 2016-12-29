@@ -2,9 +2,11 @@
 using Steam_Apps_Manager.SteamUtils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 
 namespace Steam_Apps_Manager
 {
@@ -26,7 +28,7 @@ namespace Steam_Apps_Manager
             {
                 System.Windows.MessageBox.Show("Steam Apps Manager cannot be used while Steam is running ; please close Steam and try again.", "Steam is running", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
-                Application.Current.Shutdown();
+                System.Windows.Application.Current.Shutdown();
                 return;
             }
 
@@ -86,7 +88,7 @@ namespace Steam_Apps_Manager
             SteamUtils.App selectedApp = steamApps[listBox.SelectedIndex];
 
             this.appNameLabel.Content = selectedApp.appName;
-            this.appPathLabel.Content = "Installed in " + selectedApp.folder.path;
+            this.appPathLabel.Content = "Installed in " + selectedApp.folder.path.Substring(0, selectedApp.folder.path.Length-10);
             this.appSizeLabel.Content = "Size : " + ConvertSizeFromBytesToString(selectedApp.sizeOnDisk);
 
             SteamAppStatus status = selectedApp.GetStatus();
@@ -118,6 +120,63 @@ namespace Steam_Apps_Manager
            dialog.Owner = this;
            dialog.ShowDialog();
            RefreshApps();
+        }
+
+        private void importButton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.MessageBox.Show("Please select an already existing Steam library folder - NOT the steamapps folder, but the folder containing it (it should also contain steam.dll).", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string selectedPath = dialog.SelectedPath;
+                if (Directory.GetFiles(selectedPath, "steam.dll").Length == 0)
+                {
+                    MessageBoxResult msgResult = System.Windows.MessageBox.Show("This folder doesn't contain steam.dll and therefore doesn't seem to be a valid Steam library folder.\nImport it anyway ?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (msgResult == MessageBoxResult.No)
+                    {
+                        return;
+                    }
+                }
+
+                LibraryFolder folder = new LibraryFolder(selectedPath + "\\steamapps");
+
+                if (folder.apps.Count == 0)
+                {
+                    MessageBoxResult msgResult = System.Windows.MessageBox.Show("This library folder doesn't contain any Steam app.\nImport it anyway ?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (msgResult == MessageBoxResult.No)
+                    {
+                        return;
+                    }
+                }
+
+                if (LibraryFolder.AddLibraryFolderToVDF(selectedPath) == -1)
+                {
+                    System.Windows.MessageBox.Show("This library folder is already in your Steam library. Aborting.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                string games = "";
+
+                foreach (Steam_Apps_Manager.SteamUtils.App app in folder.apps)
+                {
+                    games += "\n" + app.appName;
+                }
+
+                if (folder.apps.Count == 0)
+                {
+                    System.Windows.MessageBox.Show("The library folder was successfully imported, but no app was added to your library." + games, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("The library folder was successfully imported. The following games were added to your library :" + games, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+
+                RefreshApps();
+            }
         }
     }
 }

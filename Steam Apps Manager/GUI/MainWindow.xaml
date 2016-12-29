@@ -12,7 +12,7 @@
             <ColumnDefinition Width="251*"/>
         </Grid.ColumnDefinitions>
         <ListBox x:Name="listBox" Height="149" Margin="16,10,16,0" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectionChanged="listBox_SelectionChanged"/>
-        <GroupBox x:Name="groupBox" Margin="15,165,16,0" VerticalAlignment="Top" Height="150" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" Header="App informations">
+        <GroupBox x:Name="groupBox" Margin="15,165,16,0" VerticalAlignment="Top" Height="142" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" Header="App informations">
             <Grid Height="135" Width="587" Margin="10,10,10,-12">
                 <Grid x:Name="welcomeLabelGrid"  Height="129" Margin="0,0,10,0">
                     <Label x:Name="label" Content="Please select an app in the list." HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-12,0,0"/>
@@ -26,7 +26,8 @@
                 </StackPanel>
             </Grid>
         </GroupBox>
-        <Label x:Name="label1" Content="Steam Apps Manager v1.0 - by natinusala" HorizontalAlignment="Left" Margin="256,312,0,0" VerticalAlignment="Top" Width="230" Grid.Column="1" HorizontalContentAlignment="Right"/>
+        <Label x:Name="label1" Content="Steam Apps Manager v1.0 - by natinusala" HorizontalAlignment="Left" Margin="256,309,0,0" VerticalAlignment="Top" Width="230" Grid.Column="1" HorizontalContentAlignment="Right"/>
+        <Button x:Name="importButton" Content="Import an existing library..." Grid.Column="1" HorizontalAlignment="Left" Margin="90,312,0,0" VerticalAlignment="Top" Width="161" Click="importButton_Click"/>
 
     </Grid>
 </Window>

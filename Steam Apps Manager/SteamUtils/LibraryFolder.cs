@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Steam_Apps_Manager.GUI;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
 
 namespace Steam_Apps_Manager.SteamUtils
 {
@@ -16,6 +19,67 @@ namespace Steam_Apps_Manager.SteamUtils
         public long GetAvailableFreeDiskSpace()
         {
             return new DriveInfo(path.Substring(0, 1)).AvailableFreeSpace;
+        }
+
+        public static int AddLibraryFolderToVDF(string selectedPath)
+        {
+            selectedPath = selectedPath.Replace("\\", "\\\\");
+            //Add to VDF
+            string libraryFoldersVdf = Utils.GetLibraryFolderVDFPath();
+            ACFNode libraryFoldersVdfNode = ACFNode.ParseACF(libraryFoldersVdf);
+
+            ACFNode libraryFoldersVdfNodeRoot = ((ACFNode)libraryFoldersVdfNode["LibraryFolders"]);
+
+            int i = 1;
+
+            while (libraryFoldersVdfNodeRoot.ContainsKey(i.ToString()))
+            {
+                if ((string)libraryFoldersVdfNodeRoot[i.ToString()] == selectedPath)
+                {
+                    return -1;
+                }
+                i++;
+            }
+
+            libraryFoldersVdfNodeRoot[i.ToString()] = selectedPath;
+
+            File.WriteAllText(libraryFoldersVdf, libraryFoldersVdfNode.ToString(), new UTF8Encoding(false));
+
+            return 0;
+        }
+
+        public static LibraryFolder CreateNew()
+        {
+            System.Windows.MessageBox.Show("Please select a folder in which to create a new Steam library (steamapps will be created INTO this folder). It must be empty.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string selectedPath = dialog.SelectedPath;
+                string steamAppsPath = selectedPath + "\\steamapps";
+
+                if (Utils.IsDirectoryEmpty(selectedPath))
+                {
+                    //DLL
+                    string dllPath = Utils.GetSteamDLLPath();
+                    string newDllPath = selectedPath + "\\steam.dll";
+
+                    Directory.CreateDirectory(steamAppsPath);
+                    File.Copy(dllPath, newDllPath);
+
+                    AddLibraryFolderToVDF(selectedPath);
+
+                    return new LibraryFolder(steamAppsPath);
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("The selected folder is not empty. Aborting.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return null;
+                }
+            }
+
+            return null;
         }
         
 
@@ -63,6 +127,11 @@ namespace Steam_Apps_Manager.SteamUtils
 
             //Listing of all the files in this directory
             //to detect the manifests
+
+            if (!Directory.Exists(path))
+            {
+                return;
+            }
 
             string[] files = Directory.GetFiles(path);
 
