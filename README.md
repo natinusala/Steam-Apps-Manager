@@ -22,7 +22,7 @@ You can download it using the Releases tab above.
 
 ##To import a Steam library folder
 - Open the software
-- Click on the Import a library folder button
+- Click on the Import an existing library button
 - Select the folder 
 - Done
   
