@@ -16,6 +16,33 @@ namespace Steam_Apps_Manager.SteamUtils
             return new ACFNode(new StringReader(File.ReadAllText(file, new UTF8Encoding(false))));
         }
 
+        private string InternalToString(string str, int level)
+        {
+            string tabulations = new string('\t', level);
+            foreach (KeyValuePair<string, Object> entry in this)
+            {
+                str += tabulations + "\"" + entry.Key + "\"";
+
+                if (entry.Value.GetType() == typeof(ACFNode))
+                {
+                    str += tabulations + "\n{\n";
+                    str = tabulations + ((ACFNode)entry.Value).InternalToString(str, level + 1);
+                    str += tabulations + "\n}\n";
+                }
+                else
+                {
+                    str += tabulations + "\t\t" + "\"" + (string)entry.Value + "\"\n";
+                }
+            }
+
+            return str;
+        }
+
+        public override string ToString()
+        {
+            return InternalToString("", 0);
+        }
+
         public string GetValue(params string[] keys)
         {
             ACFNode root = this;

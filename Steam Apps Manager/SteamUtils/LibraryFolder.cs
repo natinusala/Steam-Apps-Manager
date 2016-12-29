@@ -24,8 +24,8 @@ namespace Steam_Apps_Manager.SteamUtils
             List<LibraryFolder> list = new List<LibraryFolder>();
 
             //Add the default install directory
-            string baseSteamApps = Utils.GetSteamInstallDirectory() + "\\steamapps";
-            string libraryFoldersVdf = baseSteamApps + "\\libraryfolders.vdf";
+            string baseSteamApps = Utils.GetBaseSteamAppsPath();
+            string libraryFoldersVdf = Utils.GetLibraryFolderVDFPath();
             list.Add(new LibraryFolder(baseSteamApps));
 
             //Add all the others

@@ -26,7 +26,7 @@
                 </StackPanel>
             </Grid>
         </GroupBox>
-        <Label x:Name="label1" Content="Steam Apps Manager by natinusala" HorizontalAlignment="Left" Margin="256,312,0,0" VerticalAlignment="Top" Width="230" Grid.Column="1" HorizontalContentAlignment="Right"/>
+        <Label x:Name="label1" Content="Steam Apps Manager v1.0 - by natinusala" HorizontalAlignment="Left" Margin="256,312,0,0" VerticalAlignment="Top" Width="230" Grid.Column="1" HorizontalContentAlignment="Right"/>
 
     </Grid>
 </Window>

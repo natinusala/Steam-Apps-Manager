@@ -15,6 +15,16 @@ namespace Steam_Apps_Manager.SteamUtils
             "SOFTWARE\\Valve\\Steam"
         }; 
 
+        public static string GetBaseSteamAppsPath()
+        {
+            return GetSteamInstallDirectory() + "\\steamapps";
+        }
+
+        public static string GetLibraryFolderVDFPath()
+        {
+            return GetBaseSteamAppsPath() + "\\libraryfolders.vdf";
+        }
+
         public static string GetSteamInstallDirectory()
         {
             RegistryKey key = null;
@@ -35,6 +45,11 @@ namespace Steam_Apps_Manager.SteamUtils
             {
                 return (string) key.GetValue("InstallPath");
             }
+        }
+
+        public static string GetSteamDLLPath()
+        {
+            return GetSteamInstallDirectory() + "\\Steam.dll";
         }
 
         public static bool IsSteamRunning()
