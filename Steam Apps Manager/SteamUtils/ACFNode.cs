@@ -16,6 +16,17 @@ namespace Steam_Apps_Manager.SteamUtils
             return new ACFNode(new StringReader(File.ReadAllText(file, new UTF8Encoding(false))));
         }
 
+        new public Object this[String key]
+        {
+            get { return base[key.ToLower()]; }
+            set { base[key.ToLower()] = value; }
+        }
+
+        public new void Add(String key, Object value)
+        {
+            base.Add(key.ToLower(), value);
+        }
+
         private string InternalToString(string str, int level)
         {
             string tabulations = new string('\t', level);
