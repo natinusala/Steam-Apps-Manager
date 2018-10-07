@@ -11,7 +11,7 @@
             <ColumnDefinition Width="65*"/>
             <ColumnDefinition Width="251*"/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="listBox" Height="149" Margin="16,10,16,0" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectionChanged="listBox_SelectionChanged"/>
+        <ListBox x:Name="listBox" Height="149" Margin="16,10,16,0" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectionChanged="listBox_SelectionChanged" SelectionMode="Extended"/>
         <GroupBox x:Name="groupBox" Margin="15,165,16,0" VerticalAlignment="Top" Height="142" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" Header="App information">
             <Grid Height="135" Width="587" Margin="10,10,10,-12">
                 <Grid x:Name="welcomeLabelGrid"  Height="129" Margin="0,0,10,0">

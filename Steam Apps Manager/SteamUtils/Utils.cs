@@ -54,6 +54,29 @@ namespace Steam_Apps_Manager.SteamUtils
             }
         }
 
+        public static string FormatGameList(List<SteamUtils.App> games, int maxChars)
+        {
+            string formattedList = "";
+            int overflowAmount = 0;
+
+            foreach (SteamUtils.App app in games)
+            {
+                if (formattedList.Length + app.appName.Length + 13 <= maxChars)
+                    formattedList += ", " + app.appName;
+               
+                else overflowAmount++;
+            }
+
+            formattedList = formattedList.Substring(2);
+
+            if (overflowAmount > 0)
+                formattedList += " + " + overflowAmount + " game";
+            if (overflowAmount > 1)
+                formattedList += "s";
+
+            return formattedList;
+        }
+
         public static bool IsDirectoryEmpty(string path)
         {
             DirectoryInfo directory = new DirectoryInfo(path);
