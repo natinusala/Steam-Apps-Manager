@@ -33,7 +33,7 @@ namespace Steam_Apps_Manager.GUI
             InitializeComponent();
 
             this.Title = "Move " + steamApp.appName;
-            this.appNameLabel.Content = "Move " + steamApp.appName + " to :";
+            this.appNameLabel.Content = "Move " + steamApp.appName + " to:";
 
             Refresh();
 
@@ -55,7 +55,8 @@ namespace Steam_Apps_Manager.GUI
 
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            System.Windows.MessageBox.Show("The app has been successfully moved !\nRun a game cache files verification from Steam if the game doesn't work properly.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            System.Windows.MessageBox.Show(steamApp.appName + " has been successfully moved!\n" +
+                "Select \"verify integrity of game files\" via Steam if the game doesn't run.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
         }
 
@@ -120,7 +121,7 @@ namespace Steam_Apps_Manager.GUI
             }
 
             //Beginning
-            this.appNameMovingLabel.Content = "Moving " + steamApp.appName + " to " + selectedFolder.path + "\\...";
+            this.appNameMovingLabel.Content = "Moving " + steamApp.appName + " to " + selectedFolder.path + "\\";
 
             this.progressBar.Value = 0;
             this.progressBar.Maximum = 1000;

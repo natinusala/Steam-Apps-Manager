@@ -40,14 +40,10 @@ namespace Steam_Apps_Manager.SteamUtils
             this.fullInstallDir = this.folder.path + "\\common\\" + installDir;
             this.appState = int.Parse((string)appState["StateFlags"]);
 
-            if (appState.ContainsKey("SizeOnDisk"))
-            {
-                sizeOnDisk = long.Parse(((string)appState["SizeOnDisk"]));
-            }
-            else
-            {
-                this.sizeOnDisk = 0;
-            }
+            this.sizeOnDisk = Utils.GetDirectorySize(this.fullInstallDir);
+
+            Console.WriteLine(this.fullInstallDir);
+            Console.WriteLine("Size of " + this.appName + " is " + this.sizeOnDisk);
         }
 
         public string GetManifestPath()

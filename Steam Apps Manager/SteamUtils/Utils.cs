@@ -26,6 +26,33 @@ namespace Steam_Apps_Manager.SteamUtils
             return GetBaseSteamAppsPath() + "\\libraryfolders.vdf";
         }
 
+        public static long GetDirectorySize(string path)
+        {
+            try
+            {
+                long totalBytes = 0;
+                DirectoryInfo rootDirectory = new DirectoryInfo(path);
+
+                FileInfo[] files = rootDirectory.GetFiles();
+
+                foreach (FileInfo file in files)
+                {
+                    totalBytes += file.Length;
+                }
+
+                DirectoryInfo[] directories = rootDirectory.GetDirectories();
+
+                foreach (DirectoryInfo directory in directories)
+                {
+                    totalBytes += GetDirectorySize(directory.FullName);
+                }
+
+                return totalBytes;
+            } catch(Exception e)
+            {
+                return 0;
+            }
+        }
 
         public static bool IsDirectoryEmpty(string path)
         {
