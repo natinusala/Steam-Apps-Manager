@@ -50,7 +50,7 @@ namespace Steam_Apps_Manager.SteamUtils
 
         public static LibraryFolder CreateNew()
         {
-            System.Windows.MessageBox.Show("Please select a folder in which to create a new Steam library (steamapps will be created INTO this folder). It must be empty.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            System.Windows.MessageBox.Show("Please select an empty folder for your new Steam library.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             DialogResult result = dialog.ShowDialog();
 

@@ -26,6 +26,56 @@ namespace Steam_Apps_Manager.SteamUtils
             return GetBaseSteamAppsPath() + "\\libraryfolders.vdf";
         }
 
+        public static long GetDirectorySize(string path)
+        {
+            try
+            {
+                long totalBytes = 0;
+                DirectoryInfo rootDirectory = new DirectoryInfo(path);
+
+                FileInfo[] files = rootDirectory.GetFiles();
+
+                foreach (FileInfo file in files)
+                {
+                    totalBytes += file.Length;
+                }
+
+                DirectoryInfo[] directories = rootDirectory.GetDirectories();
+
+                foreach (DirectoryInfo directory in directories)
+                {
+                    totalBytes += GetDirectorySize(directory.FullName);
+                }
+
+                return totalBytes;
+            } catch(Exception e)
+            {
+                return 0;
+            }
+        }
+
+        public static string FormatGameList(List<SteamUtils.App> games, int maxChars)
+        {
+            string formattedList = "";
+            int overflowAmount = 0;
+
+            foreach (SteamUtils.App app in games)
+            {
+                if (formattedList.Length + app.appName.Length + 13 <= maxChars)
+                    formattedList += ", " + app.appName;
+               
+                else overflowAmount++;
+            }
+
+            formattedList = formattedList.Substring(2);
+
+            if (overflowAmount > 0)
+                formattedList += " + " + overflowAmount + " game";
+            if (overflowAmount > 1)
+                formattedList += "s";
+
+            return formattedList;
+        }
 
         public static bool IsDirectoryEmpty(string path)
         {

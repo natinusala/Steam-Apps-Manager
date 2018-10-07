@@ -46,8 +46,9 @@ namespace Steam_Apps_Manager.SteamUtils
             }
             else
             {
-                this.sizeOnDisk = 0;
+                this.sizeOnDisk = Utils.GetDirectorySize(this.fullInstallDir);
             }
+            
         }
 
         public string GetManifestPath()
@@ -62,32 +63,39 @@ namespace Steam_Apps_Manager.SteamUtils
 
         public void MoveAppFiles(LibraryFolder newFolder, BackgroundWorker worker)
         {
-            string newFullDir = newFolder.path + "\\common\\" + installDir;
-
-            foreach(string path in Directory.GetDirectories(this.fullInstallDir, "*", SearchOption.AllDirectories))
+            try
             {
-                Directory.CreateDirectory(path.Replace(fullInstallDir, newFullDir));
-            }
+                string newFullDir = newFolder.path + "\\common\\" + installDir;
 
-            foreach (string file in Directory.GetFiles(fullInstallDir, "*.*", SearchOption.AllDirectories))
-            {
-                FileInfo info = new FileInfo(file);
-                long fileSize = info.Length;
-
-                File.Move(file, file.Replace(fullInstallDir, newFullDir));
-
-                if (worker != null && fileSize != 0)
+                foreach (string path in Directory.GetDirectories(this.fullInstallDir, "*", SearchOption.AllDirectories))
                 {
-                    worker.ReportProgress((int)Math.Round(((double)fileSize / (double)sizeOnDisk) * 1000.0f));
+                    Directory.CreateDirectory(path.Replace(fullInstallDir, newFullDir));
                 }
+
+                foreach (string file in Directory.GetFiles(fullInstallDir, "*.*", SearchOption.AllDirectories))
+                {
+                    FileInfo info = new FileInfo(file);
+                    long fileSize = info.Length;
+
+                    File.Move(file, file.Replace(fullInstallDir, newFullDir));
+
+                    if (worker != null && fileSize != 0)
+                    {
+                        worker.ReportProgress((int)Math.Round(((double)fileSize / (double)sizeOnDisk) * 1000.0f));
+                    }
+                }
+
+                worker.ReportProgress(-1);
+
+                Directory.Delete(this.fullInstallDir, true);
+
+                this.folder = newFolder;
+                this.fullInstallDir = this.folder.path + "\\common\\" + installDir;
             }
-
-            worker.ReportProgress(-1);
-
-            Directory.Delete(this.fullInstallDir, true);
-
-            this.folder = newFolder;
-            this.fullInstallDir = this.folder.path + "\\common\\" + installDir;
+            catch (System.IO.DirectoryNotFoundException)
+            {
+                return;
+            }
         }
     }
 }

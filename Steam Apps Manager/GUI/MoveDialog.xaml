@@ -11,7 +11,7 @@
         <Grid x:Name="folderSelectGrid">
             <Label x:Name="appNameLabel" Content="Move xxx to :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
             <ComboBox x:Name="comboBox" Margin="10,41,0,0" VerticalAlignment="Top" Width="565" HorizontalAlignment="Left"/>
-            <Button x:Name="button" Content="Move it now" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Width="565" Click="button_Click"/>
+            <Button x:Name="button" Content="Move now" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Width="565" Click="button_Click"/>
         </Grid>
         <Grid x:Name="movingGrid" Visibility="Collapsed">
             <Label x:Name="appNameMovingLabel" Content="Moving xxx to xxx :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>

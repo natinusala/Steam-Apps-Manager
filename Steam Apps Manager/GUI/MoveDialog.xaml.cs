@@ -15,13 +15,14 @@ namespace Steam_Apps_Manager.GUI
 
     public partial class MoveDialog : Window
     {
-        private SteamUtils.App steamApp;
+        private List<SteamUtils.App> steamApps;
         private List<LibraryFolder> libraryFolders;
         private BackgroundWorker worker;
+        private string formattedGameList;
 
-        public MoveDialog(SteamUtils.App steamApp)
+        public MoveDialog(List<SteamUtils.App> steamApps)
         {
-            this.steamApp = steamApp;
+            this.steamApps = steamApps;
             this.libraryFolders = new List<LibraryFolder>();
 
             this.worker = new BackgroundWorker();
@@ -32,8 +33,9 @@ namespace Steam_Apps_Manager.GUI
 
             InitializeComponent();
 
-            this.Title = "Move " + steamApp.appName;
-            this.appNameLabel.Content = "Move " + steamApp.appName + " to :";
+            this.formattedGameList = Utils.FormatGameList(steamApps, 60);
+            this.Title = "Move " + this.formattedGameList;
+            this.appNameLabel.Content = "Move " + this.formattedGameList + " to:";
 
             Refresh();
 
@@ -41,21 +43,32 @@ namespace Steam_Apps_Manager.GUI
 
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            //Preparation
-            string oldManifestPath = steamApp.GetManifestPath();
-            string newManifestPath = selectedFolder.GetManifestPathForAppId(steamApp.appId);
+            foreach (SteamUtils.App steamApp in steamApps)
+            {
+                //Preparation
+                string oldManifestPath = steamApp.GetManifestPath();
+                string newManifestPath = selectedFolder.GetManifestPathForAppId(steamApp.appId);
 
-            //Moving the manifest
-            Directory.CreateDirectory(newManifestPath.Substring(0, newManifestPath.LastIndexOf('\\')));
-            File.Move(oldManifestPath, newManifestPath);
+                //Moving the manifest
+                Directory.CreateDirectory(newManifestPath.Substring(0, newManifestPath.LastIndexOf('\\')));
+                try
+                {
+                    File.Move(oldManifestPath, newManifestPath);
+                }
+                catch (FileNotFoundException)
+                {
 
-            //Moving the game  
-            steamApp.MoveAppFiles(selectedFolder, worker);
+                }
+
+                //Moving the game  
+                steamApp.MoveAppFiles(selectedFolder, worker);
+            }
         }
 
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            System.Windows.MessageBox.Show("The app has been successfully moved !\nRun a game cache files verification from Steam if the game doesn't work properly.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            System.Windows.MessageBox.Show(this.formattedGameList + " have been successfully moved!\n" +
+                "Select \"verify integrity of game files\" via Steam if the game(s) do not run.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
         }
 
@@ -83,7 +96,7 @@ namespace Steam_Apps_Manager.GUI
 
             foreach (LibraryFolder folder in tempLibraryFolders)
             {
-                if (folder.path != steamApp.folder.path)
+                if (folder.path != steamApps[0].folder.path)
                 {
                     this.comboBox.Items.Add(folder.path);
                     libraryFolders.Add(folder);
@@ -112,15 +125,20 @@ namespace Steam_Apps_Manager.GUI
                 selectedFolder = libraryFolders[this.comboBox.SelectedIndex];
             }
 
-            if (selectedFolder.GetAvailableFreeDiskSpace() <= steamApp.sizeOnDisk)
+            long totalBytes = 0;
+
+            foreach(SteamUtils.App app in this.steamApps)
+                totalBytes += app.sizeOnDisk;
+
+            if (selectedFolder.GetAvailableFreeDiskSpace() <= totalBytes)
             {
-                System.Windows.MessageBox.Show("You don't have enough free space on disk " + selectedFolder.path[0] + " to move the game.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("You don't have enough free space on disk " + selectedFolder.path[0] + " to move the game(s).", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Refresh();
                 return;
             }
 
             //Beginning
-            this.appNameMovingLabel.Content = "Moving " + steamApp.appName + " to " + selectedFolder.path + "\\...";
+            this.appNameMovingLabel.Content = "Moving " + this.formattedGameList + " to " + selectedFolder.path + "\\";
 
             this.progressBar.Value = 0;
             this.progressBar.Maximum = 1000;
